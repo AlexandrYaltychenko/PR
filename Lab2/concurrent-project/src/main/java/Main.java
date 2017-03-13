@@ -8,14 +8,13 @@ public class Main {
     private final Object thread5Waiter = new Object();
 
     public void runLab(){
-        final CyclicBarrier barrier = new CyclicBarrier(3, new Runnable() {
-            public void run() {
+        final CyclicBarrier barrier = new CyclicBarrier(3,() -> {
                 System.out.println("BARRIER!");
                 synchronized (thread5Waiter){
                     thread5Waiter.notify();
                 }
             }
-        });
+        );
         CountDownLatch latch = new CountDownLatch(3);
         Thread1 thread1 = new Thread1(barrier);
         Thread2 thread2 = new Thread2(barrier,latch);
