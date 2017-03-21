@@ -12,7 +12,7 @@ public class Thread6 extends Thread {
     public void run(){
         System.out.println("Thread6 thread started execution ");
         try {
-            System.out.println("Thread5 waits");
+            System.out.println("Thread6 waits");
             latch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
