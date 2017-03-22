@@ -7,7 +7,7 @@ import java.util.concurrent.CyclicBarrier;
 public class Main {
     private final Object thread5Waiter = new Object();
 
-    public void runLab(){
+    private void runLab(){
         final CyclicBarrier barrier = new CyclicBarrier(3,() -> {
                 System.out.println("BARRIER!");
                 synchronized (thread5Waiter){
