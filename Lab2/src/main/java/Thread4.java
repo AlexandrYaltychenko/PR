@@ -12,7 +12,8 @@ public class Thread4 extends Thread {
     public void run(){
         System.out.println("Thread4 thread started execution ");
         try {
-            Thread.sleep(1250);
+            Thread.sleep(50);
+            System.out.println("Thread4 makes countdown");
             latch.countDown();
         } catch (InterruptedException e) {
             e.printStackTrace();

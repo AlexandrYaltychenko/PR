@@ -18,6 +18,7 @@ public class Thread2 extends Thread{
         try {
             Thread.sleep(300);
             barrier.await();
+            System.out.println("Thread2 makes countdown");
             latch.countDown();
         } catch (InterruptedException ex) {
             return;

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="utm.crawler.lab4.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:text="Keyword:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="mdl"
+                    android:ems="10"
+                    android:id="@+id/keyword"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:background="@android:drawable/title_bar"
+                    android:layout_marginRight="1dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:text="Level:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:id="@+id/level"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:background="@android:drawable/title_bar"
+                    android:layout_marginLeft="1dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <TextView
+                android:text="Link:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:textSize="18sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="https://999.md"
+                android:ems="10"
+                android:id="@+id/link"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:background="@android:drawable/title_bar"
+                android:layout_marginRight="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="START!"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/start"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <TextView
+            android:text="Keyword matches: "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/matches"
+            android:textColor="@color/colorAccent"
+            android:layout_marginBottom="5dp"
+            android:textSize="18sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:text="Link Details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_weight="3"
+                android:padding="5dp"
+                android:gravity="center"
+                android:textStyle="normal|bold"
+                android:textColor="@android:color/background_dark"
+                android:background="@android:color/holo_green_dark"
+                android:layout_marginRight="1dp" />
+
+            <TextView
+                android:text="Keyword:"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:gravity="center"
+                android:textStyle="normal|bold"
+                android:textColor="@android:color/background_dark"
+                android:background="@android:color/holo_green_dark"
+                android:layout_marginLeft="1dp" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listView" />
+
+    </LinearLayout>
+
+</RelativeLayout>
