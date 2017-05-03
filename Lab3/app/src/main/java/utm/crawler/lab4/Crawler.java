@@ -80,7 +80,7 @@ public class Crawler {
             public Void doInBackground(Void... params) {
 
                 getLinks(host, url, level);
-                processPages();
+                //processPages();
                 return null;
             }
 
@@ -99,7 +99,7 @@ public class Crawler {
             if (link.getKeywordCount() == -1) {
                 int count = 0;
                 try {
-                    Document doc = Jsoup.parse(performGetCall(link.getLink()));
+                    Document doc = Jsoup.connect(link.getLink()).get();
                     count = getKeywordCount(doc.body().text(), keyword);
                     keywordCount += count;
                 } catch (Exception e) {
@@ -113,12 +113,12 @@ public class Crawler {
 
     private void getLinks(String host, String adr, int level) {
         try {
-            Document doc = Jsoup.parse(performGetCall(adr));
+            Document doc = Jsoup.connect(adr).get();
             Elements links = doc.select("a[href]");
             int count = getKeywordCount(doc.body().text(), keyword);
             keywordCount += count;
             allLinks.add(new FoundLink(adr, (levelLimit - level)));
-            Log.d("RESULT", "VISITING " + adr + "KEYWORD ENTRIES = " + count);
+            Log.d("RESULT", "VISITING " + adr + " KEYWORD ENTRIES = " + count);
             for (Element link : links) {
                 String url = link.attr("href");
                 try {
