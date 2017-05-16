@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 /**
  * Created by alexandr on 14.05.17.
  */
-public class Client {
+public class Client{
     private int port;
     private String login, password;
     private Logger logger;
@@ -41,7 +41,7 @@ public class Client {
     }
 
     public void calcExp(double val) {
-        Message task = new Message.Builder("exp")
+        Message task = new Message.Builder(JProtocol.EXP_TYPE)
                 .addParam("value", String.valueOf(val))
                 .build();
         tasks.add(task);
@@ -54,7 +54,7 @@ public class Client {
 
     }
 
-    private class ClientListener implements Runnable {
+    private class ClientListener implements Runnable, JProtocol {
         private Socket socket;
         private boolean isWorking;
         private PrintWriter writer;
@@ -71,8 +71,8 @@ public class Client {
                 e.printStackTrace();
             }
         }
-
-        private Message read() {
+        @Override
+        public Message read() {
             try {
                 String content = reader.readLine();
                 try {
@@ -91,8 +91,8 @@ public class Client {
             }
             return null;
         }
-
-        private void send(Message message) {
+        @Override
+        public void send(Message message) {
             if (message.getType().equals("error"))
                 logger.addError("CLIENT", "SENT TO SERVER: " + message.toString());
             else
@@ -105,7 +105,7 @@ public class Client {
         public void run() {
             try {
                 //Authentication
-                Message authRequest = new Message.Builder("auth")
+                Message authRequest = new Message.Builder(AUTH_TYPE)
                         .addParam("login", login)
                         .addParam("password", password)
                         .build();
@@ -126,7 +126,6 @@ public class Client {
                     }
                     if (tasks.size() > 0) {
                         Message msg = tasks.poll();
-                        logger.addEvent("CLIENT", "SENT TO SERVER: " + msg);
                         send(msg);
                         response = read();
                         if (!response.getType().equals("error"))
@@ -136,6 +135,10 @@ public class Client {
                         }
                     }
                 }
+                Message message = new Message.Builder(EXIT_TYPE)
+                        .addParam("cause","manual stop")
+                        .build();
+                send(message);
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();

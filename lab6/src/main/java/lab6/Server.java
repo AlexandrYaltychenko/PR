@@ -77,7 +77,7 @@ public class Server {
         }
     }
 
-    private class ServerWorker implements Runnable {
+    private class ServerWorker implements Runnable, JProtocol {
         private PrintWriter writer;
         private BufferedReader reader;
         private Socket socket;
@@ -95,8 +95,8 @@ public class Server {
                 ex.printStackTrace();
             }
         }
-
-        private Message read() {
+        @Override
+        public Message read() {
             try {
                 String content = reader.readLine();
                 try {
@@ -105,18 +105,16 @@ public class Server {
                     Message message = new Message(jsonObject.toJSONString());
                     return message;
                 } catch (ParseException p) {
-                    p.printStackTrace();
                     logger.addError("CLIENT", "FROM " + (authenticated ? login : "anonymus") + " (NOT JSON): " + content);
                     return null;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 logger.addError("CLIENT", "FROM " + (authenticated ? login : "anonymus") + " (NOT JSON): null");
             }
             return null;
         }
-
-        private void send(Message message) {
+        @Override
+        public void send(Message message) {
             if (message.getType().equals("error"))
                 logger.addError("SERVER", "SENT TO CLIENT " + message.toString());
             else
@@ -130,7 +128,7 @@ public class Server {
             try {
                 Message message = read();
                 if (message == null) {
-                    message = new Message.Builder("error")
+                    message = new Message.Builder(ERROR_TYPE)
                             .addParam("info", "bad request")
                             .addParam("code", "400")
                             .build();
@@ -143,7 +141,7 @@ public class Server {
                 synchronized (database) {
                     boolean result = database.checkCredentials(login, password);
                     if (!result) {
-                        message = new Message.Builder("error")
+                        message = new Message.Builder(ERROR_TYPE)
                                 .addParam("info", "access denied")
                                 .addParam("code", "403")
                                 .build();
@@ -154,6 +152,7 @@ public class Server {
                     }
                 }
                 logger.addEvent("SERVER", login + " AUTHENTICATED SUCCESSFULLY");
+                authenticated = true;
                 message = new Message.Builder("success")
                         .addParam("info", "success")
                         .addParam("code", "200")
@@ -163,19 +162,28 @@ public class Server {
                     try {
                         System.out.println("TRYING...");
                         Message request = read();
-                        if (request == null)
-                            send(new Message.Builder("error")
+                        if (request == null) {
+                            send(new Message.Builder(ERROR_TYPE)
                                     .addParam("info", "bad request")
                                     .addParam("code", "400")
                                     .build());
+                            socket.close();
+                        }
                         else
                             switch (request.getType()) {
-                                case "exp":
-                                    send(new Message.Builder("exp")
+                                case EXP_TYPE:
+                                    send(new Message.Builder(EXP_TYPE)
                                             .addParam("info", "success")
                                             .addParam("code", "200")
                                             .addParam("result", String.valueOf(Math.exp(Double.parseDouble(request.getParam("value")))))
                                             .build());
+                                    break;
+                                case FIND_TYPE:
+                                    database.find()
+                                    send(new Message.Builder(FIND_TYPE)
+                                    .addParam("info"))
+                                case EXIT_TYPE:
+                                    socket.close();
                                     break;
                             }
                     } catch (Exception e){

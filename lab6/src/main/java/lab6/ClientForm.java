@@ -4,11 +4,13 @@ import javax.swing.*;
 import javax.swing.text.html.HTMLDocument;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /**
  * Created by alexandr on 14.05.17.
  */
-public class ClientForm implements Logger{
+public class ClientForm implements Logger, WindowListener{
     public JPanel root;
     private JButton CONNECTTOTHESERVERButton;
     private JButton CALCEXPButton;
@@ -105,5 +107,41 @@ public class ClientForm implements Logger{
         client = null;
         client = null;
         CONNECTTOTHESERVERButton.setText("START CLIENT");
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        client.stop();
+        client = null;
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

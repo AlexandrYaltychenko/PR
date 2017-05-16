@@ -68,4 +68,8 @@ public class Database {
             return null;
         }
     }
+
+    public String find(String str){
+
+    }
 }

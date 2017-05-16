@@ -73,7 +73,9 @@ public class Main implements Logger {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 JFrame frame = new JFrame("Client "+(clientIndexer++));
-                frame.setContentPane(new ClientForm().root);
+                ClientForm clientForm = new ClientForm();
+                frame.setContentPane(clientForm.root);
+                frame.addWindowListener(clientForm);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 frame.pack();
